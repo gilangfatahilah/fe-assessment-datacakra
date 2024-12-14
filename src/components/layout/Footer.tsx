@@ -1,17 +1,12 @@
-import { useTheme } from "next-themes";
-
-import logoDark from "@/assets/logo-dark.svg";
-import logoLight from "@/assets/logo-light.svg";
+import Logo from "../ui/Logo";
 
 export const Footer = () => {
-  const { theme } = useTheme();
-
   return (
     <footer className="w-full mt-10 pb-20 bg rounded-t-xl bg-secondary">
       <div className="p-10 border-t border-secondary rounded-2xl">
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
           <div className="col-span-full xl:col-span-2">
-            <img src={theme === "light" ? logoDark : logoLight} alt="Logo" />
+            <Logo />
           </div>
 
           <div className="flex flex-col gap-2">

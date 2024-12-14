@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { useTheme } from "next-themes";
 
-import logoDark from "@/assets/logo-dark.svg";
-import logoLight from "@/assets/logo-light.svg";
 import Button from "@/components/ui/Button";
 import ModeToggle from "../ui/ModeToggle";
+import Logo from "../ui/Logo";
 
 const navLinks = [
   { label: "Home", href: "#hero" },
@@ -15,7 +13,6 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const { theme } = useTheme();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const toggleMobileNav = () => {
@@ -26,8 +23,7 @@ const Navbar = () => {
     <>
       <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/30 backdrop-blur dark:border-border">
         <div className="container h-14 flex items-center justify-between">
-          {/* Logo */}
-          <img src={theme === "light" ? logoDark : logoLight} alt="Logo" />
+          <Logo />
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-4 font-medium">
@@ -46,7 +42,7 @@ const Navbar = () => {
                 <Link to="/login">Login</Link>
               </Button>
               <Button variant={"secondary"}>
-                <Link to="/register">Login</Link>
+                <Link to="/register">Register</Link>
               </Button>
             </div>
 

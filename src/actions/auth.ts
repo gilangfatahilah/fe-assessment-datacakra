@@ -31,3 +31,7 @@ export async function login(previousState: unknown, formData: FormData) {
         data, error: null
     }
 }
+
+export async function logout() {
+    // todo: make some logic
+}

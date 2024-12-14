@@ -1,4 +1,4 @@
-import AuthFormLayout from "@/components/layout/Auth";
+import AuthFormLayout from "@/components/layout/AuthForm";
 import RegisterForm from "@/components/form/Register";
 
 const RegisterPage = () => {
