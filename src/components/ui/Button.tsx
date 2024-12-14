@@ -1,8 +1,8 @@
 import { ButtonHTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const classes = cva(
-  "inline-flex justify-center items-center rounded-lg font-medium",
+const buttonClasses = cva(
+  "inline-flex justify-center items-center rounded-lg font-medium disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -29,11 +29,14 @@ const classes = cva(
 
 interface Props
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof classes> {}
+    VariantProps<typeof buttonClasses> {}
 
 const Button = ({ variant, className, size, ...restProps }: Props) => {
   return (
-    <button className={classes({ variant, size, className })} {...restProps} />
+    <button
+      className={buttonClasses({ variant, size, className })}
+      {...restProps}
+    />
   );
 };
 

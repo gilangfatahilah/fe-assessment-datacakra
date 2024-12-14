@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { useTheme } from "next-themes";
 
@@ -41,14 +42,18 @@ const Navbar = () => {
               </a>
             ))}
             <div className="flex items-center gap-2">
-              <Button>Login</Button>
-              <Button variant={"secondary"}>Register</Button>
+              <Button>
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button variant={"secondary"}>
+                <Link to="/register">Login</Link>
+              </Button>
             </div>
 
             <ModeToggle />
           </nav>
 
-          {/* Mobile Menu Icon */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={toggleMobileNav}
             className="md:hidden flex flex-col gap-1.5 z-50 relative"
