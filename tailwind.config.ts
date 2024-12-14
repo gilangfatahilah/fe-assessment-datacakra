@@ -2,6 +2,16 @@ import type { Config } from "tailwindcss";
 
 export default {
 	darkMode: ["class"],
+	safelist: [
+		"translate-y-14",
+		"-translate-y-full",
+		"opacity-0",
+		"opacity-100",
+		"rotate-45",
+		"-rotate-45",
+		"translate-y-2",
+		"-translate-y-2",
+	],
 	content: [
 		"./index.html",
 		"./src/**/*.{js,ts,jsx,tsx}",
@@ -11,8 +21,8 @@ export default {
 			center: true,
 			padding: {
 				DEFAULT: "1rem",
-				md: "2rem",
-				lg: "4rem",
+				md: "1.5rem",
+				lg: "2rem",
 			},
 		},
 		extend: {
