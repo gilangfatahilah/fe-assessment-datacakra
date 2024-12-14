@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 
 import logoDark from "@/assets/logo-dark.svg";
@@ -30,11 +31,13 @@ const AuthFormLayout = ({ children }: PropsWithChildren) => {
 
       <main className="flex items-center justify-center h-[80vh] px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
         <div className="max-w-xl lg:max-w-2xl">
-          <img
-            src={theme === "light" ? logoDark : logoLight}
-            alt="Logo"
-            className="mx-auto"
-          />
+          <Link to={"/"}>
+            <img
+              src={theme === "light" ? logoDark : logoLight}
+              alt="Logo"
+              className="mx-auto cursor-pointer"
+            />
+          </Link>
 
           <p className="mt-2 text-sm text-center text-muted-foreground">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis,
