@@ -34,7 +34,7 @@ const Sidebar = ({ isOpen }: Props) => {
     <>
       <div
         className={twMerge(
-          "sticky z-40 h-full shadow-md transition-all duration-300 ease-in-out overflow-hidden",
+          "sticky z-40 h-full bg-background shadow-md transition-all duration-300 ease-in-out overflow-hidden",
           isOpen ? "translate-x-0 w-64" : "-translate-x-full w-0"
         )}
       >

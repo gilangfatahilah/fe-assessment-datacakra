@@ -6,10 +6,9 @@ import Button from "@/components/ui/Button";
 import ModeToggle from "../ui/ModeToggle";
 import Logo from "../ui/Logo";
 
-const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "Blogs", href: "#blog" },
-  { label: "Faqs", href: "#faq" },
+const mobileNavMenus = [
+  { label: "Login", href: "/login" },
+  { label: "Register", href: "/register" },
 ];
 
 const Navbar = () => {
@@ -27,16 +26,6 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-4 font-medium">
-            {navLinks.map((navLink) => (
-              <a
-                key={navLink.href}
-                href={navLink.href}
-                className="relative group"
-              >
-                <span>{navLink.label}</span>
-                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
-              </a>
-            ))}
             <div className="flex items-center gap-2">
               <Button>
                 <Link to="/login">Login</Link>
@@ -49,52 +38,49 @@ const Navbar = () => {
             <ModeToggle />
           </nav>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={toggleMobileNav}
-            className="md:hidden flex flex-col gap-1.5 z-50 relative"
-          >
-            <span
-              className={twMerge(
-                "block w-6 h-0.5 bg-current transition-transform duration-300",
-                isMobileNavOpen && "rotate-45 translate-y-2"
-              )}
-            ></span>
-            <span
-              className={twMerge(
-                "block w-6 h-0.5 bg-current transition-opacity duration-300",
-                isMobileNavOpen && "opacity-0"
-              )}
-            ></span>
-            <span
-              className={twMerge(
-                "block w-6 h-0.5 bg-current transition-transform duration-300",
-                isMobileNavOpen && "-rotate-45 -translate-y-2"
-              )}
-            ></span>
-          </button>
+          <div className="md:hidden flex gap-2 items-center">
+            <ModeToggle />
+
+            <button
+              onClick={toggleMobileNav}
+              className="flex flex-col gap-1.5 z-50 relative"
+            >
+              <span
+                className={twMerge(
+                  "block w-6 h-0.5 bg-current transition-transform duration-300",
+                  isMobileNavOpen && "rotate-45 translate-y-2"
+                )}
+              ></span>
+              <span
+                className={twMerge(
+                  "block w-6 h-0.5 bg-current transition-opacity duration-300",
+                  isMobileNavOpen && "opacity-0"
+                )}
+              ></span>
+              <span
+                className={twMerge(
+                  "block w-6 h-0.5 bg-current transition-transform duration-300",
+                  isMobileNavOpen && "-rotate-45 -translate-y-2"
+                )}
+              ></span>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Navigation */}
       <div
         className={twMerge(
-          "absolute block md:hidden top-0 left-0 w-full bg-background/30 backdrop-blur-sm border-b transform transition-transform duration-500 ease-in-out",
+          "fixed block md:hidden top-0 z-50 left-0 w-full bg-background/30 backdrop-blur-sm border-b transform transition-transform duration-500 ease-in-out",
           isMobileNavOpen
             ? "translate-y-14 opacity-100 delay-100"
             : "-translate-y-48 opacity-100 delay-150"
         )}
       >
         <nav className="flex flex-col items-center py-4 gap-4 font-medium">
-          {navLinks.map((navLink) => (
-            <a
-              key={navLink.href}
-              href={navLink.href}
-              className="relative group"
-            >
-              <span>{navLink.label}</span>
-              <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full rounded-full" />{" "}
-            </a>
+          {mobileNavMenus.map((menu) => (
+            <Link key={menu.href} to={menu.href}>
+              {menu.label}
+            </Link>
           ))}
         </nav>
       </div>

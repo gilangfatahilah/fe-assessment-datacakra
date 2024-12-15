@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from "react";
-import { LogOut, Menu, User } from "lucide-react";
+import { LogOut, Menu, User, UserRound } from "lucide-react";
 
 import Sidebar from "./Sidebar";
 import Logo from "../ui/Logo";
@@ -31,17 +31,24 @@ const AuthenticatedLayout = ({ children }: Props) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleLogout = () => {
+    // todo : add some logic here.
+    alert("Successfully logout");
+  };
+
   return (
     <>
       <Dialog
+        title="Are you sure ?"
+        confirmText="Yes"
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}
-        title="Are you sure ?"
+        onConfirm={handleLogout}
       >
         You will redirected to home page.
       </Dialog>
 
-      <div className="flex h-screen">
+      <div className="flex h-full min-h-screen">
         <div className="flex flex-1 flex-col overflow-hidden">
           <header className="border-b border-border/40 bg-background/30 backdrop-blur dark:border-border shadow-sm px-6 py-4 flex items-center justify-between">
             <div className=" w-48 md:w-72 flex items-center justify-between space-x-6">
@@ -56,14 +63,17 @@ const AuthenticatedLayout = ({ children }: Props) => {
               </Button>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               <ModeToggle />
               <DropdownMenu items={menuItems}>
-                <img
+                {/* <img
                   src="/api/placeholder/40/40"
                   alt="User"
                   className="w-10 h-10 border border-border rounded-full"
-                />
+                /> */}
+                <Button size={"icon"} variant={"ghost"}>
+                  <UserRound className="w-[1.2rem] h-[1.2rem]" />
+                </Button>
               </DropdownMenu>
             </div>
           </header>
