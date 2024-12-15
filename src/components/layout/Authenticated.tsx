@@ -1,11 +1,26 @@
 import { PropsWithChildren, useState } from "react";
+import { LogOut, Menu, User } from "lucide-react";
 
 import Sidebar from "./Sidebar";
-import { Bell, Menu, Search } from "lucide-react";
 import Logo from "../ui/Logo";
 import Button from "../ui/Button";
+import ModeToggle from "../ui/ModeToggle";
+import DropdownMenu from "../ui/Dropdown";
 
 type Props = PropsWithChildren;
+
+const menuItems = [
+  {
+    label: "Profile",
+    icon: <User />,
+    navigateTo: "/profile",
+  },
+  {
+    label: "Logout",
+    icon: <LogOut />,
+    onClick: () => alert("logout"),
+  },
+];
 
 const AuthenticatedLayout = ({ children }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -16,15 +31,6 @@ const AuthenticatedLayout = ({ children }: Props) => {
 
   return (
     <div className="flex h-screen">
-      {/* <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} /> */}
-
-      {/* <aside>
-        <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-      </aside> */}
-
       <div className="flex flex-1 flex-col overflow-hidden">
         <header className="border-b border-border/40 bg-background/30 backdrop-blur dark:border-border shadow-sm px-6 py-4 flex items-center justify-between">
           <div className=" w-48 md:w-72 flex items-center justify-between space-x-6">
@@ -40,48 +46,20 @@ const AuthenticatedLayout = ({ children }: Props) => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="relative hover:bg-gray-100 rounded-full p-2">
-              <Bell className="text-gray-600" />
-              <span
-                className="
-                absolute 
-                top-0 
-                right-0 
-                bg-red-500 
-                text-white 
-                rounded-full 
-                w-4 
-                h-4 
-                flex 
-                items-center 
-                justify-center 
-                text-xs
-              "
-              >
-                3
-              </span>
-            </button>
-
-            <div className="flex items-center space-x-2">
+            <ModeToggle />
+            <DropdownMenu items={menuItems}>
               <img
                 src="/api/placeholder/40/40"
                 alt="User"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 border border-border rounded-full"
               />
-              <div className="hidden md:block">
-                <p className="text-sm font-medium">John Doe</p>
-                <p className="text-xs text-gray-500">Admin</p>
-              </div>
-            </div>
+            </DropdownMenu>
           </div>
         </header>
 
         <main className="flex h-full">
           <aside>
-            <Sidebar
-              isOpen={isSidebarOpen}
-              onClose={() => setIsSidebarOpen(false)}
-            />
+            <Sidebar isOpen={isSidebarOpen} />
           </aside>
 
           <section className="flex-1 overflow-x-hidden overflow-y-auto bg-secondary p-6">
