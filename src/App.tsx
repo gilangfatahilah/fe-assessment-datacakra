@@ -4,6 +4,7 @@ import DashboardPage from "./pages/authenticated/DashboardPage";
 import GuestPage from "./pages/GuestPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
+import ProfilePage from "./pages/authenticated/ProfilePage";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 }

@@ -12,6 +12,8 @@ const buttonClasses = cva(
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         ghost: "hover:bg-accent hover:text-accent-foreground",
+        danger:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/80",
       },
       size: {
         icon: "h-10 w-10",

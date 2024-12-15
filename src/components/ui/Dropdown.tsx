@@ -8,7 +8,7 @@ export interface MenuItem {
   onClick?: () => void;
 }
 
-export interface Props extends PropsWithChildren {
+interface Props extends PropsWithChildren {
   items: MenuItem[];
 }
 
