@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 import Button from "@/components/ui/Button";
 import ModeToggle from "../ui/ModeToggle";
@@ -12,6 +13,7 @@ const mobileNavMenus = [
 ];
 
 const Navbar = () => {
+  const { user } = useAuthStore();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const toggleMobileNav = () => {
@@ -26,14 +28,20 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-4 font-medium">
-            <div className="flex items-center gap-2">
+            {user ? (
               <Button>
-                <Link to="/login">Login</Link>
+                <Link to="/dashboard">Dashboard</Link>
               </Button>
-              <Button variant={"secondary"}>
-                <Link to="/register">Register</Link>
-              </Button>
-            </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button>
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button variant={"secondary"}>
+                  <Link to="/register">Register</Link>
+                </Button>
+              </div>
+            )}
 
             <ModeToggle />
           </nav>
@@ -77,11 +85,14 @@ const Navbar = () => {
         )}
       >
         <nav className="flex flex-col items-center py-4 gap-4 font-medium">
-          {mobileNavMenus.map((menu) => (
-            <Link key={menu.href} to={menu.href}>
-              {menu.label}
-            </Link>
-          ))}
+          {user && <Link to={"/dashboard"}>Dashboard</Link>}
+
+          {!user &&
+            mobileNavMenus.map((menu) => (
+              <Link key={menu.href} to={menu.href}>
+                {menu.label}
+              </Link>
+            ))}
         </nav>
       </div>
 
