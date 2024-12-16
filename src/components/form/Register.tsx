@@ -1,7 +1,5 @@
 import { useActionState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { register } from "@/actions/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 import Input from "../ui/Input";
@@ -9,22 +7,17 @@ import Button from "../ui/Button";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuthStore();
+  const { register } = useAuthStore();
   const [state, action, isPending] = useActionState(register, undefined);
 
   /**
    * Listen to response form action if success it will redirected to dashboard.
    */
   useEffect(() => {
-    if (state?.error) {
-      toast.error(state.error);
-    }
-
-    if (!state?.error && state?.success) {
-      setUser(state.response.user);
+    if (state?.success) {
       navigate("/dashboard");
     }
-  }, [state, navigate, setUser]);
+  }, [state, navigate]);
 
   return (
     <form action={action} className="mt-8 grid grid-cols-6 gap-6">
