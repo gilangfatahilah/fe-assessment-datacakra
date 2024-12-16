@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/components/layout/Authenticated";
+import AuthenticatedLayout from "@/layouts/Authenticated";
 import Card from "@/components/ui/Card";
 import Chart from "@/components/ui/Chart";
 

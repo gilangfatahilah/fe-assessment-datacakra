@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/components/layout/Authenticated";
+import AuthenticatedLayout from "@/layouts/Authenticated";
 
 const ProfilePage = () => {
   return (

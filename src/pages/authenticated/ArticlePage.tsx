@@ -1,7 +1,6 @@
 import React from "react";
 
-import { articles } from "@/constants/articles";
-import AuthenticatedLayout from "@/components/layout/Authenticated";
+import AuthenticatedLayout from "@/layouts/Authenticated";
 import ArticleCard from "@/components/card/Article";
 
 const ArticlePage = () => {
@@ -12,9 +11,9 @@ const ArticlePage = () => {
       </h1>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {articles.map((article) => (
+        {/* {articles.map((article) => (
           <ArticleCard article={article} />
-        ))}
+        ))} */}
       </div>
     </AuthenticatedLayout>
   );
