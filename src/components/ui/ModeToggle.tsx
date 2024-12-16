@@ -1,16 +1,16 @@
-import { useTheme } from "next-themes";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 import { Sun, Moon } from "lucide-react";
 import Button from "./Button";
 
 const ModeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { toggleTheme } = useThemeStore();
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={toggleTheme}
       aria-label="Toggle theme"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
