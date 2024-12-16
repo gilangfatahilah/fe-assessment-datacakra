@@ -1,5 +1,7 @@
 import { PropsWithChildren, useState } from "react";
+import cookies from "js-cookie";
 import { LogOut, Menu, User, UserRound } from "lucide-react";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 import Sidebar from "./Sidebar";
 import Logo from "../ui/Logo";
@@ -11,6 +13,8 @@ import Dialog from "../ui/Dialog";
 type Props = PropsWithChildren;
 
 const AuthenticatedLayout = ({ children }: Props) => {
+  // const navigate = useNavigate();
+  const { setUser } = useAuthStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
@@ -32,8 +36,8 @@ const AuthenticatedLayout = ({ children }: Props) => {
   };
 
   const handleLogout = () => {
-    // todo : add some logic here.
-    alert("Successfully logout");
+    cookies.remove("jwt_token");
+    setUser(null);
   };
 
   return (

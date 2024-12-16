@@ -1,18 +1,30 @@
 import { useActionState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { register } from "@/actions/auth";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuthStore();
   const [state, action, isPending] = useActionState(register, undefined);
 
+  /**
+   * Listen to response form action if success it will redirected to dashboard.
+   */
   useEffect(() => {
-    //Todo: render toast when some error occurred
+    if (state?.error) {
+      toast.error(state.error);
+    }
 
-    console.log(state);
-  }, [state]);
+    if (!state?.error && state?.success) {
+      setUser(state.response.user);
+      navigate("/dashboard");
+    }
+  }, [state, navigate, setUser]);
 
   return (
     <form action={action} className="mt-8 grid grid-cols-6 gap-6">

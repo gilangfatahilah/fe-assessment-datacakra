@@ -1,18 +1,30 @@
 import { useActionState, useEffect } from "react";
-import { register } from "@/actions/auth";
-import { Link } from "react-router-dom";
+import { login } from "@/actions/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const LoginForm = () => {
-  const [state, action, isPending] = useActionState(register, undefined);
+  const navigate = useNavigate();
+  const { setUser } = useAuthStore();
+  const [state, action, isPending] = useActionState(login, undefined);
 
+  /**
+   * Listen to response form action if success it will redirected to dashboard.
+   */
   useEffect(() => {
-    //Todo: render toast when some error occurred
+    if (state?.error) {
+      toast.error(state.error);
+    }
 
-    console.log(state);
-  }, [state]);
+    if (!state?.error && state?.success) {
+      setUser(state.response.user);
+      navigate("/dashboard");
+    }
+  }, [state, navigate, setUser]);
 
   return (
     <form action={action} className="mt-8 grid grid-cols-6 gap-6">
@@ -22,10 +34,10 @@ const LoginForm = () => {
         </label>
 
         <Input
-          defaultValue={state?.data?.email}
+          defaultValue={state?.data?.identifier}
           type="email"
           id="email"
-          name="email"
+          name="identifier"
         />
       </div>
 
@@ -44,7 +56,7 @@ const LoginForm = () => {
 
       <div className="col-span-6 flex flex-col items-center gap-4">
         <Button className="w-full" disabled={isPending}>
-          {isPending ? "Please wait" : "Register"}
+          {isPending ? "Please wait" : "Login"}
         </Button>
 
         <p className="mt-4 text-sm text-muted-foreground sm:mt-0">
