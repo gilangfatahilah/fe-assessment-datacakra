@@ -18,7 +18,7 @@ const Card = ({
   return (
     <div
       className={twMerge(
-        "bg-background border border-border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300",
+        "bg-background border border-border rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:shadow-primary/20 hover:ring-1 hover:ring-primary/20 transition-shadow duration-300",
         className
       )}
       {...restProps}

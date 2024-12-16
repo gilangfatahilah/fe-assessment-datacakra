@@ -1,12 +1,12 @@
 import dashboardLight from "@/assets/dashboard-light.webp";
 import dashboardDark from "@/assets/dashboard-dark.webp";
 
-import Button from "../ui/Button";
+import Button from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const Hero = () => {
-  const { theme } = useTheme();
+  const { theme } = useThemeStore();
 
   return (
     <section className="container w-full">
