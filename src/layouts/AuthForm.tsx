@@ -1,13 +1,8 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "next-themes";
-
-import logoDark from "@/assets/logo-dark.svg";
-import logoLight from "@/assets/logo-light.svg";
+import Logo from "../components/ui/Logo";
 
 const AuthFormLayout = ({ children }: PropsWithChildren) => {
-  const { theme } = useTheme();
-
   return (
     <section className="lg:grid lg:min-h-screen lg:grid-cols-12">
       <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -32,11 +27,7 @@ const AuthFormLayout = ({ children }: PropsWithChildren) => {
       <main className="flex items-center justify-center h-[80vh] md:h-full px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
         <div className="max-w-xl lg:max-w-2xl">
           <Link to={"/"}>
-            <img
-              src={theme === "light" ? logoDark : logoLight}
-              alt="Logo"
-              className="mx-auto cursor-pointer"
-            />
+            <Logo />
           </Link>
 
           <p className="mt-2 text-sm text-center text-muted-foreground">

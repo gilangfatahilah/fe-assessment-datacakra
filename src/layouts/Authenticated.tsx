@@ -4,11 +4,11 @@ import { LogOut, Menu, User, UserRound } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 import Sidebar from "./Sidebar";
-import Logo from "../ui/Logo";
-import Button from "../ui/Button";
-import ModeToggle from "../ui/ModeToggle";
-import DropdownMenu from "../ui/Dropdown";
-import Dialog from "../ui/Dialog";
+import Logo from "../components/ui/Logo";
+import Button from "../components/ui/Button";
+import ModeToggle from "../components/ui/ModeToggle";
+import DropdownMenu from "../components/ui/Dropdown";
+import Dialog from "../components/ui/Dialog";
 
 type Props = PropsWithChildren;
 

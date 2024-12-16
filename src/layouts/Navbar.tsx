@@ -4,8 +4,8 @@ import { twMerge } from "tailwind-merge";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 import Button from "@/components/ui/Button";
-import ModeToggle from "../ui/ModeToggle";
-import Logo from "../ui/Logo";
+import ModeToggle from "../components/ui/ModeToggle";
+import Logo from "../components/ui/Logo";
 
 const mobileNavMenus = [
   { label: "Login", href: "/login" },

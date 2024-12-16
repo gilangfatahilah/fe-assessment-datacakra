@@ -1,6 +1,6 @@
-import Logo from "../ui/Logo";
+import Logo from "../components/ui/Logo";
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <footer className="w-full mt-10 pb-20 bg rounded-t-xl bg-secondary">
       <div className="p-10 border-t border-secondary rounded-2xl">
@@ -100,7 +100,7 @@ export const Footer = () => {
           &copy; developed by
           <a
             target="_blank"
-            href="https://github.com/gilangfatahilah"
+            href="https://gilangf.vercel.app"
             className="text-primary transition-all border-primary hover:border-b-2 ml-1"
           >
             Gilang Fatahilah
@@ -110,3 +110,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;
