@@ -2,9 +2,16 @@ import { useThemeStore } from "@/stores/useThemeStore";
 
 import { Sun, Moon } from "lucide-react";
 import Button from "./Button";
+import { useEffect } from "react";
 
 const ModeToggle = () => {
-  const { toggleTheme } = useThemeStore();
+  const { theme, toggleTheme } = useThemeStore();
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    root.classList.add(theme);
+  }, [theme]);
 
   return (
     <Button
