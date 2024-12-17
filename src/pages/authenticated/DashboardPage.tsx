@@ -68,7 +68,7 @@ const DashboardPage = () => {
             <Chart
               data={articleChartData?.data}
               labels={articleChartData?.labels}
-              type="bar"
+              type="line"
             />
           ) : loading ? (
             <Loader className="animate-spin mx-auto" />

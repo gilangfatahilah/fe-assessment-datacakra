@@ -13,8 +13,15 @@ import { Skeleton } from "@/components/ui/Skeleton";
 const categoryList = getCategoryList();
 
 const Article = () => {
-  const { articles, loading, pagination, fetchArticles, setPage, setFilter } =
-    useArticleStore();
+  const {
+    articles,
+    loading,
+    pagination,
+    fetchArticles,
+    setPage,
+    setFilter,
+    reset,
+  } = useArticleStore();
   const categories = use(categoryList) as Category[];
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -28,7 +35,9 @@ const Article = () => {
 
   useEffect(() => {
     fetchArticles();
-  }, [fetchArticles]);
+
+    return () => reset();
+  }, [fetchArticles, reset]);
 
   const handleSearchCategory = () => {
     if (Number(selectedCategory) === 0) {

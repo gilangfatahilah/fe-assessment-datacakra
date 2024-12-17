@@ -1,9 +1,11 @@
 import { Dispatch, PropsWithChildren, SetStateAction } from "react";
 import Button from "./Button";
+import { Loader } from "lucide-react";
 
 interface Props extends PropsWithChildren {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  loading?: boolean;
   title?: string;
   onConfirm?: () => void;
   confirmText?: string;
@@ -16,6 +18,7 @@ const Dialog = ({
   title,
   children,
   onConfirm,
+  loading = false,
   confirmText = "Confirm",
   cancelText = "Cancel",
 }: Props) => {
@@ -29,10 +32,18 @@ const Dialog = ({
         <div className="mb-4 text-sm">{children}</div>
 
         <div className="flex justify-end space-x-2">
-          <Button variant={"danger"} onClick={() => setIsOpen(false)}>
+          <Button
+            disabled={loading}
+            variant={"danger"}
+            onClick={() => setIsOpen(false)}
+          >
             {cancelText}
           </Button>
-          {onConfirm && <Button onClick={onConfirm}>{confirmText}</Button>}
+          {onConfirm && (
+            <Button disabled={loading} onClick={onConfirm}>
+              {loading ? <Loader className="animate-spin" /> : confirmText}
+            </Button>
+          )}
         </div>
       </div>
     </div>

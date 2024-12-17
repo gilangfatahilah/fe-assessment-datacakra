@@ -20,8 +20,8 @@ const RegisterForm = () => {
   }, [state, navigate]);
 
   return (
-    <form action={action} className="mt-8 grid grid-cols-6 gap-6">
-      <div className="col-span-6 space-y-2">
+    <form action={action} className="mt-8 flex flex-col items-center gap-6">
+      <div className="space-y-2">
         <label htmlFor="username" className="block text-sm font-medium">
           Username
         </label>
@@ -34,7 +34,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="col-span-6 space-y-2">
+      <div className="space-y-2">
         <label htmlFor="email" className="block text-sm font-medium">
           Email
         </label>
@@ -47,7 +47,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="col-span-6 space-y-2">
+      <div className="space-y-2">
         <label htmlFor="password" className="block text-sm font-medium">
           Password
         </label>
@@ -60,7 +60,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="col-span-6 space-y-2">
+      <div className="space-y-2">
         <label
           htmlFor="password-confirmation"
           className="block text-sm font-medium"
@@ -76,7 +76,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="col-span-6 flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4">
         <Button className="w-full" disabled={isPending}>
           {isPending ? "Please wait" : "Register"}
         </Button>

@@ -14,7 +14,7 @@ type Props = PropsWithChildren;
 
 const AuthenticatedLayout = ({ children }: Props) => {
   const { setUser } = useAuthStore();
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const menuItems = [

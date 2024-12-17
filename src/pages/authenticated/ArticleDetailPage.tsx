@@ -13,7 +13,8 @@ import notFound from "@/assets/404.svg";
 import { Skeleton } from "@/components/ui/Skeleton";
 
 const ArticlePage = () => {
-  const { article, loading, getArticleById } = useArticleStore();
+  const { documentId } = useParams();
+  const { article, loading, getArticleById, reset } = useArticleStore();
   const {
     comments,
     loading: commentLoading,
@@ -22,19 +23,24 @@ const ArticlePage = () => {
     hasMore,
     page,
     total,
+    reset: resetComment,
   } = useCommentStore();
-  const { documentId } = useParams();
+
   const [userCommentValue, setUserCommentValue] = useState<string>("");
   const observer = useRef<IntersectionObserver | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (documentId) getArticleById(documentId);
-  }, [documentId, getArticleById]);
+
+    return () => reset();
+  }, [documentId, getArticleById, reset]);
 
   useEffect(() => {
     if (article) fetchComments(article.id);
-  }, [article, fetchComments]);
+
+    return () => resetComment();
+  }, [article, fetchComments, resetComment]);
 
   /**
    * Implements infinite scroll for the comments section using the IntersectionObserver API.
@@ -82,14 +88,17 @@ const ArticlePage = () => {
             </div>
 
             <img
-              src={article.cover_image_url}
+              src={
+                article.cover_image_url.length
+                  ? article.cover_image_url
+                  : "https://fakeimg.pl/200x100?text=No+image"
+              }
               alt={article.title}
               className="w-full h-full object-cover rounded-md"
             />
 
             <p className=" py-6">{article.description}</p>
 
-            {/* Comments Section */}
             <div className="px-2">
               <h2 className="text-2xl font-semibold py-2 mb-2">
                 {total + " Comments"}

@@ -27,7 +27,7 @@ const DropdownMenu = ({ items, children }: Props) => {
 
   return (
     <div className="relative inline-block">
-      <button onClick={() => setIsOpen((prev) => !prev)}>{children}</button>
+      <div onClick={() => setIsOpen((prev) => !prev)}>{children}</div>
 
       {isOpen && (
         <ul className="absolute right-0 z-10 w-48 mt-2 border bg-primary-foreground rounded shadow-lg">

@@ -1,7 +1,7 @@
-import React, { HTMLAttributes, Ref } from "react";
+import React, { Ref, TextareaHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface Props extends HTMLAttributes<HTMLTextAreaElement> {
+interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   ref?: Ref<HTMLTextAreaElement>;
 }
 

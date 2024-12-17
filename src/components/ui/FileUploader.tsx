@@ -1,28 +1,30 @@
-import { Upload } from "lucide-react";
 import React, { useState, useRef } from "react";
-// import { uploadFile } from "../services/uploadService";
+import { axiosInstance } from "@/libs/axios";
+import { AxiosError } from "axios";
+import { Upload } from "lucide-react";
+import { toast } from "sonner";
+import Button from "./Button";
 
 interface Props {
-  onUploadSuccess?: (url: string) => void;
+  onUploadSuccess: (url: string) => void;
   defaultValue?: string;
+  formName?: string;
 }
 
-const FileUploader = ({ onUploadSuccess, defaultValue }: Props) => {
+const FileUploader = ({ onUploadSuccess, defaultValue, formName }: Props) => {
   const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(
-    defaultValue ?? null
-  );
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [filename, setFilename] = useState<string>("");
+  const [previewUrl, setPreviewUrl] = useState<string>(defaultValue ?? "");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
+      setPreviewUrl("");
       setFile(selectedFile);
-      setPreviewUrl(URL.createObjectURL(selectedFile));
-      setError(null);
+      setFilename(selectedFile.name);
     }
   };
 
@@ -30,14 +32,26 @@ const FileUploader = ({ onUploadSuccess, defaultValue }: Props) => {
     if (!file) return;
 
     setIsUploading(true);
-    setError(null);
 
     try {
-      //   const result = await uploadFile(file);
-      //   onUploadSuccess?.(result.url);
-      //   alert("Upload successful!");
-    } catch (err) {
-      setError("Upload failed. Please try again.");
+      const coverImageData = new FormData();
+      coverImageData.append("files", file);
+
+      const { data } = await axiosInstance.post("/upload", coverImageData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      onUploadSuccess(data[0].url);
+      setPreviewUrl(data[0].url);
+    } catch (error) {
+      const isAxiosError = error instanceof AxiosError;
+      toast.error(
+        isAxiosError
+          ? error.response?.data.message ?? error.message
+          : "Internal server error"
+      );
     } finally {
       setIsUploading(false);
     }
@@ -48,7 +62,7 @@ const FileUploader = ({ onUploadSuccess, defaultValue }: Props) => {
   };
 
   return (
-    <div className="max-w-xl flex flex-col items-center gap-4 border-2 border-background border-dashed p-6 rounded-lg shadow-md">
+    <div className="w-full flex flex-col items-center gap-4 border-2 border-secondary border-dashed p-6 rounded-lg shadow-md">
       {previewUrl ? (
         <img
           src={previewUrl}
@@ -56,6 +70,10 @@ const FileUploader = ({ onUploadSuccess, defaultValue }: Props) => {
           className="w-48 h-48 object-cover rounded-md"
           onClick={triggerFileInput}
         />
+      ) : filename.length ? (
+        <div className="flex items-center justify-center">
+          <p className="font-semibold text-muted-foreground">{filename}</p>
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-2">
           <Upload />
@@ -64,7 +82,7 @@ const FileUploader = ({ onUploadSuccess, defaultValue }: Props) => {
             Select an{" "}
             <span
               onClick={triggerFileInput}
-              className="text-primary underline cursor-pointer"
+              className="text-primary cursor-pointer"
             >
               {" "}
               image file{" "}
@@ -76,24 +94,20 @@ const FileUploader = ({ onUploadSuccess, defaultValue }: Props) => {
       <input
         type="file"
         accept="image/*"
+        name={formName}
         ref={inputRef}
         className="hidden"
         onChange={handleFileChange}
       />
 
-      <div className="flex gap-2">
-        <button
-          onClick={handleUpload}
-          disabled={!file || isUploading}
-          className={`px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 ${
-            (!file || isUploading) && "opacity-50 cursor-not-allowed"
-          }`}
-        >
-          {isUploading ? "Uploading..." : "Upload"}
-        </button>
-      </div>
-
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      <Button
+        onClick={handleUpload}
+        size={"sm"}
+        disabled={!filename.length || !!previewUrl.length || isUploading}
+        className="mt-2 text-sm rounded-md"
+      >
+        {isUploading ? "Uploading..." : "Upload"}
+      </Button>
     </div>
   );
 };
