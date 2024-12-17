@@ -1,4 +1,4 @@
-import { Home, BarChart2, Users } from "lucide-react";
+import { Home, Users, Newspaper } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { Link, useLocation } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen }: Props) => {
       active: pathname.includes("dashboard"),
     },
     {
-      icon: BarChart2,
+      icon: Newspaper,
       label: "Article",
       href: "/article",
       active: pathname.includes("article"),

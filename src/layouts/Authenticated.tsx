@@ -13,7 +13,6 @@ import Dialog from "../components/ui/Dialog";
 type Props = PropsWithChildren;
 
 const AuthenticatedLayout = ({ children }: Props) => {
-  // const navigate = useNavigate();
   const { setUser } = useAuthStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -54,7 +53,7 @@ const AuthenticatedLayout = ({ children }: Props) => {
 
       <div className="flex h-full min-h-screen">
         <div className="flex flex-1 flex-col overflow-hidden">
-          <header className="border-b border-border/40 bg-background/30 backdrop-blur dark:border-border shadow-sm px-6 py-4 flex items-center justify-between">
+          <header className=" px-6 py-4 flex items-center justify-between">
             <div className=" w-48 md:w-72 flex items-center justify-between space-x-6">
               <Logo />
 
@@ -70,11 +69,6 @@ const AuthenticatedLayout = ({ children }: Props) => {
             <div className="flex items-center space-x-2">
               <ModeToggle />
               <DropdownMenu items={menuItems}>
-                {/* <img
-                  src="/api/placeholder/40/40"
-                  alt="User"
-                  className="w-10 h-10 border border-border rounded-full"
-                /> */}
                 <Button size={"icon"} variant={"ghost"}>
                   <UserRound className="w-[1.2rem] h-[1.2rem]" />
                 </Button>
