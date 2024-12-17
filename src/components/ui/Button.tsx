@@ -17,7 +17,7 @@ const buttonClasses = cva(
       },
       size: {
         icon: "h-10 w-10",
-        sm: "h-8 px-4",
+        sm: "h-8 px-2",
         md: "h-10 px-4",
         lg: "h-12 px-6",
       },

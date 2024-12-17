@@ -11,25 +11,25 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import ProfilePage from "./pages/authenticated/ProfilePage";
 import ArticlePage from "./pages/authenticated/ArticlePage";
 import CategoryPage from "./pages/authenticated/CategoryPage";
+import ArticleDetailPage from "./pages/authenticated/ArticleDetailPage";
 
 export default function App() {
   const { theme } = useThemeStore();
   const { user, checkAuth, isCheckingAuth } = useAuthStore();
 
-  // Apply current theme whenever page change or refresh.
   useEffect(() => {
+    // Apply current theme
     const root = document.documentElement;
     root.classList.add(theme);
-  }, [theme]);
 
-  // Check the user is authenticated or not on every page mounted.
-  useEffect(() => {
+    // Authentication check (only runs on mount)
     checkAuth();
-  }, [checkAuth]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme]);
 
   if (isCheckingAuth && !user) {
     return (
-      <div className="flex items-center justify-center h-[50vh]">
+      <div className="flex items-center justify-center h-[100vh]">
         <Loader className="size-10 animate-spin" />
       </div>
     );
@@ -60,6 +60,10 @@ export default function App() {
       <Route
         path="/article"
         element={user ? <ArticlePage /> : <Navigate to={"/login"} />}
+      />
+      <Route
+        path="/article/:documentId"
+        element={user ? <ArticleDetailPage /> : <Navigate to={"/login"} />}
       />
       <Route
         path="/category"

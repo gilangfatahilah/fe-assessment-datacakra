@@ -12,7 +12,7 @@ export type User = {
     locale: string | null;
 }
 
-type Comment = {
+export type Comment = {
     id: number;
     documentId: string;
     content: string;
@@ -20,6 +20,7 @@ type Comment = {
     updatedAt: string | Date;
     publishedAt: string | Date;
     locale: string | null;
+    user: User;
 }
 
 export type Category = {
@@ -43,6 +44,7 @@ export type Article = {
     updatedAt: string | Date;
     publishedAt: string | Date;
     locale: string | null;
+    user: User;
     category: Category;
     comments: Comment[];
     localizations: string[];

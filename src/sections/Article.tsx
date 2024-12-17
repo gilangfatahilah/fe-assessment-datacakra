@@ -1,27 +1,44 @@
-import { use, useState } from "react";
-import { getArticleList } from "@/actions/article";
-import { Article as ArticleType, Category } from "@/types";
+import { use, useEffect, useState } from "react";
+import { Category } from "@/types";
 import ArticleCard from "@/components/card/Article";
 import { getCategoryList } from "@/actions/category";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import { Search } from "lucide-react";
+import { useArticleStore } from "@/stores/useArticleStore";
+import { Skeleton } from "@/components/ui/Skeleton";
+// import { useArticleStore } from "@/stores/useArticleStore";
 
-const articleList = getArticleList();
+// const articleList = getArticleList();
 const categoryList = getCategoryList();
 
 const Article = () => {
-  const articles = use(articleList) as ArticleType[];
+  const { articles, loading, pagination, fetchArticles, setPage, setFilter } =
+    useArticleStore();
   const categories = use(categoryList) as Category[];
-
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
-  const categorySelectOptions = categories.map((category) => ({
-    label: category.name,
-    value: category.id,
-  }));
+  const categorySelectOptions = [
+    { label: "All", value: 0 },
+    ...categories.map((category) => ({
+      label: category.name,
+      value: category.id,
+    })),
+  ];
 
-  const handleSearchCategory = () => {};
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
+
+  const handleSearchCategory = () => {
+    if (Number(selectedCategory) === 0) {
+      setFilter({});
+    } else {
+      setFilter({
+        "filters[category]": selectedCategory as number,
+      });
+    }
+  };
 
   return (
     <section className="container py-24">
@@ -47,13 +64,45 @@ const Article = () => {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {articles.map((article) => (
-          <ArticleCard
-            key={article.id}
-            article={article}
-            className="bg-secondary"
-          />
-        ))}
+        {!articles.length && !loading && (
+          <p className="col-span-full text-lg font-semibold text-center">
+            No result.
+          </p>
+        )}
+
+        {!loading
+          ? articles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                article={article}
+                className="bg-secondary cursor-pointer"
+              />
+            ))
+          : Array.from({ length: 8 }).map((_, index) => (
+              <Skeleton key={index} className="h-[30vh]" />
+            ))}
+      </div>
+
+      <div className="w-full py-4 flex items-center justify-between">
+        <p className="text-md font-semibold">{`Page ${pagination.page} of ${pagination.pageCount}`}</p>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant={"secondary"}
+            onClick={() => setPage(pagination.page - 1)}
+            disabled={pagination.page <= 1}
+          >
+            Previous
+          </Button>
+
+          <Button
+            variant={"secondary"}
+            onClick={() => setPage(pagination.page + 1)}
+            disabled={pagination.page === pagination.pageCount || loading}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </section>
   );

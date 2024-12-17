@@ -1,18 +1,21 @@
+import { HtmlHTMLAttributes } from "react";
+import { Link } from "react-router-dom";
+import { formatDate } from "@/libs/formatter";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { Article } from "@/types";
 
 import Card from "../ui/Card";
-import { HtmlHTMLAttributes } from "react";
-import { formatDate } from "@/libs/formatter";
-import { Link } from "react-router-dom";
 
 interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
   article: Article;
 }
 
 const ArticleCard = ({ article, className }: Props) => {
+  const { user } = useAuthStore();
+
   return (
     <Card className={className}>
-      <Link to={"/login"}>
+      <Link to={user ? `/article/${article.documentId}` : "/login"}>
         <img
           src={
             article.cover_image_url.length
