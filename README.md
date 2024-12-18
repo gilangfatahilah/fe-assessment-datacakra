@@ -23,7 +23,7 @@ Before you begin, ensure you have the following installed:
 ### Repository Cloning
 
 ```bash
-git clone https://github.com/gilangfatahilah/project-name.git
+git clone https://github.com/gilangfatahilah/fe-assessment-datacakra.git
 cd project-name
 ```
 
