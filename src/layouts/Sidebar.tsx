@@ -35,7 +35,7 @@ const Sidebar = ({ isOpen }: Props) => {
       <div
         className={twMerge(
           "sticky z-40 h-full bg-background shadow-md transition-all duration-300 ease-in-out overflow-hidden",
-          isOpen ? "translate-x-0 w-64" : "-translate-x-full w-0"
+          isOpen ? "translate-x-0 w-48 md:w-64" : "-translate-x-full w-0"
         )}
       >
         <div className="w-full flex items-center p-4">
@@ -48,7 +48,7 @@ const Sidebar = ({ isOpen }: Props) => {
               key={item.href}
               to={item.href}
               className={twMerge(
-                "w-full flex items-center hover:bg-primary/40 p-3 transition",
+                "w-full flex items-center hover:bg-primary/40 p-3 text-sm md:text-base transition",
                 item.active
                   ? "bg-primary/50 hover:bg-primary/30 text-primary"
                   : "text-foreground"
