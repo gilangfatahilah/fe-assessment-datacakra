@@ -1,16 +1,11 @@
-import { use, useEffect, useState } from "react";
-import { Category } from "@/types";
+import { useEffect, useState } from "react";
 import ArticleCard from "@/components/card/Article";
-import { getCategoryList } from "@/actions/category";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import { Search } from "lucide-react";
 import { useArticleStore } from "@/stores/useArticleStore";
 import { Skeleton } from "@/components/ui/Skeleton";
-// import { useArticleStore } from "@/stores/useArticleStore";
-
-// const articleList = getArticleList();
-const categoryList = getCategoryList();
+import { useCategoryStore } from "@/stores/useCategoryStore";
 
 const Article = () => {
   const {
@@ -22,7 +17,7 @@ const Article = () => {
     setFilter,
     reset,
   } = useArticleStore();
-  const categories = use(categoryList) as Category[];
+  const { categories, fetchCategories } = useCategoryStore();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   const categorySelectOptions = [
@@ -35,9 +30,10 @@ const Article = () => {
 
   useEffect(() => {
     fetchArticles();
+    fetchCategories(true);
 
     return () => reset();
-  }, [fetchArticles, reset]);
+  }, [fetchArticles, reset, fetchCategories]);
 
   const handleSearchCategory = () => {
     if (Number(selectedCategory) === 0) {

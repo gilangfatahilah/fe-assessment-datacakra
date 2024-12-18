@@ -20,7 +20,7 @@ interface CategoryStore {
     categories: Category[];
     loading: boolean;
     pagination: PaginationMeta;
-    fetchCategories: () => Promise<void>;
+    fetchCategories: (withoutPaginate?: boolean) => Promise<void>;
     createCategory: (prevState: unknown, formData: FormData) => Promise<{ success: boolean }>;
     updateCategory: (prevState: unknown, formData: FormData) => Promise<{ success: boolean }>;
     deleteCategory: (documentId: string) => Promise<void>;
@@ -38,13 +38,13 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
         total: 0,
     },
 
-    fetchCategories: async () => {
+    fetchCategories: async (withoutPaginate) => {
         const { pagination } = get();
         set({ loading: true });
 
         try {
             const { data } = await axiosInstance.get("/categories", {
-                params: {
+                params: withoutPaginate ? {} : {
                     'pagination[page]': pagination.page,
                     'pagination[pageSize]': pagination.pageSize,
                 }

@@ -1,12 +1,11 @@
-import { use, useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import { getCategoryList } from "@/actions/category";
-import { Category } from "@/types";
 import Textarea from "../ui/Textarea";
 import FileUploader from "../ui/FileUploader";
 import { useArticleStore } from "@/stores/useArticleStore";
 import { TableColumn as ArticleRow } from "@/pages/authenticated/ArticlePage";
+import { useCategoryStore } from "@/stores/useCategoryStore";
 
 type Props = {
   isOpen: boolean;
@@ -14,11 +13,9 @@ type Props = {
   defaultValue?: ArticleRow;
 };
 
-const categoryList = getCategoryList();
-
 const ArticleFormDialog = ({ isOpen, onClose, defaultValue }: Props) => {
   const { createArticle, updateArticle } = useArticleStore();
-  const categories = use(categoryList) as Category[];
+  const { categories, fetchCategories } = useCategoryStore();
   const [state, action, isPending] = useActionState(
     defaultValue ? updateArticle : createArticle,
     undefined
@@ -27,6 +24,8 @@ const ArticleFormDialog = ({ isOpen, onClose, defaultValue }: Props) => {
   const [coverImageUrl, setCoverImageUrl] = useState<string>("");
 
   useEffect(() => {
+    fetchCategories(true);
+
     if (state) {
       onClose();
     }
