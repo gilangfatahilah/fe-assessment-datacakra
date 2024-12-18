@@ -80,9 +80,11 @@ const Table = <T extends object>({
               </tr>
             ))
           ) : loading ? (
-            <td colSpan={columns.length + 2} className="w-full h-12">
-              <Loader className="animate-spin mx-auto" />
-            </td>
+            <tr>
+              <td colSpan={columns.length + 2} className="w-full h-12">
+                <Loader className="animate-spin mx-auto" />
+              </td>
+            </tr>
           ) : (
             <tr>
               <td

@@ -22,46 +22,18 @@ const DashboardPage = () => {
     <AuthenticatedLayout>
       <div className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card
-            title="Beautiful Landscape"
-            description="Enjoy the scenic beauty of nature with this stunning landscape."
-          >
-            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-              View More
-            </button>
-          </Card>
-
-          <Card
-            title="Beautiful Landscape"
-            description="Enjoy the scenic beauty of nature with this stunning landscape."
-          >
-            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-              View More
-            </button>
-          </Card>
-
-          <Card
-            title="Beautiful Landscape"
-            description="Enjoy the scenic beauty of nature with this stunning landscape."
-          >
-            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-              View More
-            </button>
-          </Card>
-
-          <Card
-            title="Beautiful Landscape"
-            description="Enjoy the scenic beauty of nature with this stunning landscape."
-          >
-            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-              View More
-            </button>
-          </Card>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Card
+              key={index}
+              title="Example card"
+              description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis nesciunt tenetur nulla aut aspernatur quia expedita ipsam alias?"
+            />
+          ))}
         </div>
 
         <Card className="h-[62vh]">
           <h1 className="text-2xl font-bold text-center py-2">
-            Most commented articles
+            Your article with the most comments
           </h1>
 
           {articleChartData?.data.length && !loading ? (

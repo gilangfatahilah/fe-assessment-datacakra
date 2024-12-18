@@ -21,7 +21,7 @@ const RegisterForm = () => {
 
   return (
     <form action={action} className="mt-8 flex flex-col items-center gap-6">
-      <div className="space-y-2">
+      <div className="w-full space-y-2">
         <label htmlFor="username" className="block text-sm font-medium">
           Username
         </label>
@@ -34,7 +34,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="w-full space-y-2">
         <label htmlFor="email" className="block text-sm font-medium">
           Email
         </label>
@@ -47,7 +47,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="w-full space-y-2">
         <label htmlFor="password" className="block text-sm font-medium">
           Password
         </label>
@@ -60,7 +60,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="space-y-2">
+      <div className="w-full space-y-2">
         <label
           htmlFor="password-confirmation"
           className="block text-sm font-medium"

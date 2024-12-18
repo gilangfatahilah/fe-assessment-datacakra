@@ -52,6 +52,10 @@ const Chart = ({ data, labels, type = "bar" }: Props) => {
     scales: {
       y: {
         beginAtZero: true,
+        min: 0,
+        ticks: {
+          stepSize: 1,
+        },
       },
     },
     plugins: {

@@ -21,6 +21,7 @@ export type Comment = {
     publishedAt: string | Date;
     locale: string | null;
     user: User;
+    article: Article;
 }
 
 export type Category = {

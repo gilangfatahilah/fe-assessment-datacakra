@@ -1,4 +1,4 @@
-import { use, useActionState, useState } from "react";
+import { use, useActionState, useEffect, useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import { getCategoryList } from "@/actions/category";
@@ -10,7 +10,7 @@ import { TableColumn as ArticleRow } from "@/pages/authenticated/ArticlePage";
 
 type Props = {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  onClose: () => void;
   defaultValue?: ArticleRow;
 };
 
@@ -19,12 +19,20 @@ const categoryList = getCategoryList();
 const ArticleFormDialog = ({ isOpen, onClose, defaultValue }: Props) => {
   const { createArticle, updateArticle } = useArticleStore();
   const categories = use(categoryList) as Category[];
-  const [, action, isPending] = useActionState(
+  const [state, action, isPending] = useActionState(
     defaultValue ? updateArticle : createArticle,
     undefined
   );
 
   const [coverImageUrl, setCoverImageUrl] = useState<string>("");
+
+  useEffect(() => {
+    if (state) {
+      onClose();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   if (!isOpen) return null;
 
@@ -32,10 +40,12 @@ const ArticleFormDialog = ({ isOpen, onClose, defaultValue }: Props) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-2xl p-6 bg-background rounded-lg">
         <div className="flex justify-between items-center">
-          <h1 className="font-bold">New article</h1>
+          <h1 className="font-bold">
+            {defaultValue ? "Edit Article" : "New Article"}
+          </h1>
           <Button
             variant={"ghost"}
-            onClick={() => onClose(false)}
+            onClick={() => onClose()}
             className="text-muted-foreground"
           >
             &#x2715;
@@ -47,7 +57,7 @@ const ArticleFormDialog = ({ isOpen, onClose, defaultValue }: Props) => {
           className="mt-4 w-full flex flex-col gap-6 items-center"
         >
           <div className="w-full space-y-2">
-            <label htmlFor="username" className="block text-sm font-medium">
+            <label htmlFor="title" className="block text-sm font-medium">
               Title
             </label>
 
@@ -121,7 +131,7 @@ const ArticleFormDialog = ({ isOpen, onClose, defaultValue }: Props) => {
           </div>
 
           <Button className="w-full" disabled={isPending}>
-            {isPending ? "Please wait" : "Submit"}
+            {isPending ? "Please wait..." : "Submit"}
           </Button>
         </form>
       </div>

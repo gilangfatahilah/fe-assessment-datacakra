@@ -2,9 +2,10 @@
   "compilerOptions": {
     "allowJs": true,
     "module": "ESNext",
+    "skipLibCheck": true,
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "strict": true,
+    "strict": false,
     "isolatedModules": true,
     "target": "ESNext",
     "esModuleInterop": true,

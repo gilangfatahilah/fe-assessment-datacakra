@@ -17,15 +17,20 @@ type UserLoginFormData = {
     password: string;
 };
 
+type FormState<T> = {
+    data: T,
+    success: boolean
+}
+
 interface AuthStore {
     user: User | null;
     isCheckingAuth: boolean;
     setUser: (userData: User | null) => void;
     checkAuth: () => Promise<void>;
-    register: (prevState: unknown, formData: FormData) =>
-        Promise<{ data: UserRegisterFormData, success: boolean } | undefined>;
-    login: (preState: unknown, formData: FormData) =>
-        Promise<{ data: UserLoginFormData, success: boolean } | undefined>;
+    register: (prevState: FormState<UserRegisterFormData>, formData: FormData) =>
+        Promise<FormState<UserRegisterFormData>>;
+    login: (preState: FormState<UserLoginFormData>, formData: FormData) =>
+        Promise<FormState<UserLoginFormData>>;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({

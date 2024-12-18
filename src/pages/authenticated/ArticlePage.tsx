@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Table, { Column } from "@/components/ui/Table";
 import AuthenticatedLayout from "@/layouts/Authenticated";
 import Button from "@/components/ui/Button";

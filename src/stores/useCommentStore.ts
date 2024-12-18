@@ -1,22 +1,25 @@
 import { create } from "zustand";
-import { Comment } from "@/types";
+import { Article, Comment } from "@/types";
 import { axiosInstance } from "@/libs/axios";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 
 interface CommentState {
     comments: Comment[];
+    articles: Article[];
     loading: boolean;
     page: number;
     total: number;
     hasMore: boolean;
     fetchComments: (articleId: number, page?: number) => Promise<void>;
+    getCommentHistory: (userId: number) => Promise<void>;
     addComment: ({ data }: { data: { article: number; content: string } }) => Promise<void>;
     reset: () => void;
 }
 
 export const useCommentStore = create<CommentState>((set) => ({
     comments: [],
+    articles: [],
     loading: false,
     page: 1,
     total: 0,
@@ -63,7 +66,28 @@ export const useCommentStore = create<CommentState>((set) => ({
         }
     },
 
+    getCommentHistory: async (userId) => {
+        set({ loading: true })
+        try {
+            const { data } = await axiosInstance.get("/comments", {
+                params: {
+                    'populate[article]': '*',
+                    'filters[user]': userId,
+                    'pagination[page]': 1,
+                    'pagination[pageSize]': 12
+                }
+            });
+
+            set({ articles: data.data.map((d: Comment) => d.article) })
+        } catch (error) {
+            const isAxiosError = error instanceof AxiosError;
+            toast.error(isAxiosError ? (error.response?.data.message ?? error.message) : "Internal server error");
+        } finally {
+            set({ loading: false });
+        }
+    },
+
     reset: () => {
-        set({ comments: [], loading: false, page: 1, hasMore: true });
+        set({ comments: [], articles: [], loading: false, page: 1, hasMore: true });
     },
 }));

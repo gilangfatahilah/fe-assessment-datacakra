@@ -23,6 +23,7 @@ type ArticleFormData = {
     documentId?: string
 }
 
+
 interface ArticleStore {
     articles: Article[];
     article: Article | null;
@@ -33,8 +34,8 @@ interface ArticleStore {
     fetchArticles: (pageSize?: number, user?: number) => Promise<void>;
     getArticleById: (documentId: string) => Promise<void>;
     getArticleChartData: (userId: number) => Promise<void>;
-    createArticle: (prevState: unknown, formData: FormData) => Promise<void>
-    updateArticle: (prevState: unknown, formData: FormData) => Promise<void>
+    createArticle: (prevState: unknown, formData: FormData) => Promise<{ success: boolean }>
+    updateArticle: (prevState: unknown, formData: FormData) => Promise<{ success: boolean }>
     deleteArticle: (documentId: string) => Promise<void>
     setPage: (page: number) => void;
     setFilter: (filter: FilterParams) => void;
@@ -155,9 +156,11 @@ export const useArticleStore = create<ArticleStore>((set, get) => ({
 
             toast.success("Article created successfully")
             set((state) => ({ articles: [data.data, ...state.articles] }));
+            return { success: true }
         } catch (error) {
             const isAxiosError = error instanceof AxiosError;
-            toast.error(isAxiosError ? (error.response?.data.message ?? error.message) : "Internal server error")
+            toast.error(isAxiosError ? (error.response?.data.message ?? error.message) : "Internal server error");
+            return { success: false }
         } finally {
             set({ loading: false })
         }
@@ -180,10 +183,13 @@ export const useArticleStore = create<ArticleStore>((set, get) => ({
             set((state) => ({
                 articles: state.articles.map((article) =>
                     article.documentId === parsedFormData.documentId ? data.data : article)
-            }))
+            }));
+
+            return { success: true }
         } catch (error) {
             const isAxiosError = error instanceof AxiosError;
             toast.error(isAxiosError ? (error.response?.data.message ?? error.message) : "Internal server error")
+            return { success: false }
         } finally {
             set({ loading: false })
         }
